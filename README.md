@@ -24,3 +24,8 @@ Drawing smily face, demonstrating drawing views and guesture recognition.
 
 	+ set `Custom Class` -> `Class` to `FaceViewController`
 
+## FaceView 
+
+1. Create FaveView.swift
+FaceView must subclass UIView, which is subclass from NSObject.
+
