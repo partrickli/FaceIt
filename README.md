@@ -27,5 +27,21 @@ Drawing smily face, demonstrating drawing views and guesture recognition.
 ## FaceView 
 
 1. Create FaveView.swift
+
 FaceView must subclass UIView, which is subclass from NSObject.
 
+2. 新建UIView 控件 
+
++ 从`Uitlities` 中拖拽一个 `UIView` 到 `StoryBoard`
+
++ 将UIView 的identity 中的class 修改为 FaceView
+
+2. 新建skull （脸轮廓线）UIBezierPath
+
++ `center`, `radius` *caution: must be inside its own coordination*
+
+`M_PI` updated to `CGFloat.pi`, which can be briefly writen as `.pi`
+
++ set Color
+
++ strike
