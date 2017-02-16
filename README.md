@@ -38,6 +38,10 @@ FaceView must subclass UIView, which is subclass from NSObject.
 
 2. 新建skull （脸轮廓线）UIBezierPath
 
+### skull radius calculation has to be calculation property
+
+Property can't be used until initalization completed.
+
 + `center`, `radius` *caution: must be inside its own coordination*
 
 `M_PI` updated to `CGFloat.pi`, which can be briefly writen as `.pi`

@@ -8,8 +8,8 @@
 
 import UIKit
 
+@IBDesignable
 class FaceView: UIView {
-
     override func draw(_ rect: CGRect) {
  		let skullRadius = min(bounds.size.width, bounds.size.height) / 2
 		let skullCenter = CGPoint(x: bounds.midX, y: bounds.midY) 
