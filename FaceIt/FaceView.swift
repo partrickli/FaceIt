@@ -10,8 +10,12 @@ import UIKit
 
 @IBDesignable
 class FaceView: UIView {
+    @IBInspectable
 	var scale: CGFloat = 0.90
 	var lineWidth: CGFloat = 5.0
+    @IBInspectable
+    var mouthCurvature: Double = 0.5 // 1 full smile, -1 full frown
+
 
  	private var skullRadius: CGFloat {
 		return min(bounds.size.width, bounds.size.height) / 2 * scale
@@ -51,6 +55,10 @@ class FaceView: UIView {
         case right
     }
     
+    /// UIBezierPath for Eyes
+    ///
+    /// - Parameter eye: left or right eye
+    /// - Returns: path for specified eye
     func pathFor(eye: Eye) -> UIBezierPath {
         
         var eyeX = skullCenter.x
@@ -71,6 +79,33 @@ class FaceView: UIView {
         return path
     }
     
+    /// UIBezierPath for mouth curvature.
+    var pathForMouth: UIBezierPath {
+        
+        let mouthWidth = skullRadius / Ratios.SkullRadiusToMouthWidth
+        let mouthHeight = skullRadius / Ratios.SkullRadiusToMouthHeight
+        let mouthOffset = skullRadius / Ratios.SkullRadiusToMouthOffset
+        
+        let mouthRect = CGRect(
+            x: skullCenter.x - mouthWidth / 2,
+            y: skullCenter.y + mouthOffset,
+            width: mouthWidth,
+            height: mouthHeight
+        )
+        
+        let smileOffset = CGFloat(min(max(mouthCurvature, -1), 1)) * mouthRect.height
+        let start = CGPoint(x: mouthRect.minX, y: mouthRect.minY)
+        let control1 = CGPoint(x: mouthRect.minX + mouthRect.width / 3, y: mouthRect.minY + smileOffset)
+        let control2 = CGPoint(x: mouthRect.maxX - mouthRect.width / 3, y: mouthRect.minY + smileOffset)
+		let end = CGPoint(x: mouthRect.maxX, y: mouthRect.minY)
+		let path = UIBezierPath()
+		path.move(to: start)
+        path.addCurve(to: end, controlPoint1: control1, controlPoint2: control2)
+		
+        path.lineWidth = lineWidth
+        return path
+    }
+    
     internal override func draw(_ rect: CGRect) {
         UIColor.blue.set()
         pathForCircleCenteredAt(skullCenter, withRadius: skullRadius).stroke()
@@ -78,6 +113,7 @@ class FaceView: UIView {
         eyes.forEach {
             pathFor(eye: $0).stroke()
         }
+        pathForMouth.stroke()
     }
 
 }
