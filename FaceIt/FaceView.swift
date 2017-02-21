@@ -11,10 +11,27 @@ import UIKit
 @IBDesignable
 class FaceView: UIView {
 
+    public func changeScale(_ recognizer: UIPinchGestureRecognizer) {
+        switch recognizer.state {
+        case .changed, .ended:
+            scale *= recognizer.scale
+            recognizer.scale = 1
+            print("face view scale is currently \(scale)")
+        default:
+            break
+        }
+    }
+    
+    @IBInspectable
+    var eyesOpen: Bool = false
     @IBInspectable
 	var color: UIColor = UIColor.blue
     @IBInspectable
-	var scale: CGFloat = 0.90
+    var scale: CGFloat = 0.90 {
+        didSet {
+            setNeedsDisplay() 
+        }
+    }
 	var lineWidth: CGFloat = 5.0
     @IBInspectable
     var mouthCurvature: Double = 0.5 // 1 full smile, -1 full frown
@@ -81,13 +98,19 @@ class FaceView: UIView {
     func pathFor(eye: Eye) -> UIBezierPath {
         
         
-        /// <#Description#>
+        /// open eye
         let eyeCenter = getEyeCenter(eye: eye)
         let eyeRadius = skullRadius / Ratios.SkullRadiusToEyeRadius
-        
-        let path = pathForCircleCenteredAt(eyeCenter, withRadius: eyeRadius)
-        path.lineWidth = lineWidth
-        return path
+        var path: UIBezierPath?
+        if eyesOpen == true {
+            path = pathForCircleCenteredAt(eyeCenter, withRadius: eyeRadius)
+        } else {
+            path = UIBezierPath()
+            path?.move(to: CGPoint(x: eyeCenter.x - eyeRadius, y: eyeCenter.y))
+            path?.addLine(to: CGPoint(x: eyeCenter.x + eyeRadius, y: eyeCenter.y))
+        }
+        path?.lineWidth = lineWidth
+        return path!
     }
     
     /// UIBezierPath for mouth curvature.

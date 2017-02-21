@@ -49,3 +49,7 @@ Property can't be used until initalization completed.
 + set Color
 
 + strike
+
+## gesture recognizer
+
+Gesture recognizer added in faceView didSet property observer.

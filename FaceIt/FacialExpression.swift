@@ -44,7 +44,7 @@ struct FacialExpression {
 		}
 	}
 	
-	var eye = Eyes.open
-	var eyeBrows = EyeBrows.relaxed
-	var mouth = Mouth.smile
+	var eyes: Eyes
+	var eyeBrows: EyeBrows
+	var mouth: Mouth
 }
