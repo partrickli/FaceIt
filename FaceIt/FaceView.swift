@@ -34,7 +34,13 @@ class FaceView: UIView {
     }
 	var lineWidth: CGFloat = 5.0
     @IBInspectable
-    var mouthCurvature: Double = 0.5 // 1 full smile, -1 full frown
+
+    // 1 full smile, -1 full frown
+    var mouthCurvature: Double = 0.5 {
+        didSet {
+            setNeedsDisplay() 
+        }
+    }
 
     @IBInspectable
     var eyeBrowTilt: Double = 0.5 // 1 full relax, -1 full frown
