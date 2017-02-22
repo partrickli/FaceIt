@@ -42,7 +42,12 @@ class FaceView: UIView {
     }
 
     @IBInspectable
-    var eyeBrowTilt: Double = 0.5 // 1 full relax, -1 full frown
+    // 1 full relax, -1 full frown
+    var eyeBrowTilt: Double = 0.5 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
 
  	private var skullRadius: CGFloat {
 		return min(bounds.size.width, bounds.size.height) / 2 * scale

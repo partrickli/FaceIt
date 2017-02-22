@@ -34,12 +34,23 @@ class FaceViewController: UIViewController {
             let blinkEyeRecognizer = UITapGestureRecognizer(target: self, action: #selector(FaceViewController.blinkEye))
             faceView.addGestureRecognizer(blinkEyeRecognizer)
             
+            // pan gesture recognizer to change eye brow angle
+            let eyebrowRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(FaceViewController.moveEyebrow(_:)))
+            faceView.addGestureRecognizer(eyebrowRecognizer)
             //update UI
             updateUI()
 
         }
     }
     
+    func moveEyebrow(_ recognizer: UIRotationGestureRecognizer) {
+        switch recognizer.state {
+        case .ended:
+            expression.eyeBrows = recognizer.rotation > 0 ? expression.eyeBrows.moreRelaxed : expression.eyeBrows.moreFurrowed
+        default:
+            break
+        }
+    }
     //happier gesture recognizer handler
     func happier() {
         expression.mouth = expression.mouth.happier
@@ -62,6 +73,12 @@ class FaceViewController: UIViewController {
         .smile: 1
     ]
     
+    let eyeBrowTilts: [FacialExpression.EyeBrows: Double] = [
+        .relaxed: 1,
+        .normal: 0,
+        .furrowed: -1
+    ]
+    
     private func updateUI() {
         
         switch expression.eyes {
@@ -74,6 +91,8 @@ class FaceViewController: UIViewController {
         }
         
         faceView.mouthCurvature = mouthCuvatures[expression.mouth] ?? 0
+        
+        faceView.eyeBrowTilt = eyeBrowTilts[expression.eyeBrows] ?? 0
     }
     
 }
