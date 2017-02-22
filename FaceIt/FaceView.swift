@@ -16,7 +16,6 @@ class FaceView: UIView {
         case .changed, .ended:
             scale *= recognizer.scale
             recognizer.scale = 1
-            print("face view scale is currently \(scale)")
         default:
             break
         }

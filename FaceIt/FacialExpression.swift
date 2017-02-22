@@ -14,6 +14,10 @@ struct FacialExpression {
 		case open
 		case closed
 		case squinting
+        
+        mutating func toggle() {
+            self = Eyes(rawValue: (rawValue + 1) % 3) ?? .open
+        }
 	}
 
 	enum EyeBrows: Int {

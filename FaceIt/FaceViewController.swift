@@ -29,18 +29,29 @@ class FaceViewController: UIViewController {
             let sadderRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(FaceViewController.sadder))
             sadderRecognizer.direction = .down
             faceView.addGestureRecognizer(sadderRecognizer)
+            
+            // tap gesture recognizer to blink eye
+            let blinkEyeRecognizer = UITapGestureRecognizer(target: self, action: #selector(FaceViewController.blinkEye))
+            faceView.addGestureRecognizer(blinkEyeRecognizer)
+            
+            //update UI
             updateUI()
+
         }
     }
     
-    //happier recognizer handler
+    //happier gesture recognizer handler
     func happier() {
         expression.mouth = expression.mouth.happier
     }
     
-    //sadder recognizer handler
+    //sadder gesture recognizer handler
     func sadder() {
         expression.mouth = expression.mouth.sadder
+    }
+    
+    func blinkEye() {
+        expression.eyes.toggle()
     }
 
     let mouthCuvatures: [FacialExpression.Mouth: Double] = [
