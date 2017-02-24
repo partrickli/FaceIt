@@ -83,16 +83,16 @@ class FaceViewController: UIViewController {
         
         switch expression.eyes {
         case .open:
-            faceView.eyesOpen = true
+            faceView?.eyesOpen = true
         case .closed:
-            faceView.eyesOpen = false
+            faceView?.eyesOpen = false
         case .squinting:
-            faceView.eyesOpen = false
+            faceView?.eyesOpen = false
         }
         
-        faceView.mouthCurvature = mouthCuvatures[expression.mouth] ?? 0
+        faceView?.mouthCurvature = mouthCuvatures[expression.mouth] ?? 0
         
-        faceView.eyeBrowTilt = eyeBrowTilts[expression.eyeBrows] ?? 0
+        faceView?.eyeBrowTilt = eyeBrowTilts[expression.eyeBrows] ?? 0
     }
     
 }

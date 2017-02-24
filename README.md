@@ -55,3 +55,7 @@ Property can't be used until initalization completed.
 Gesture recognizer added in faceView didSet property observer.
 
 The proper time to add gesture recognizer is when the view didSet observer. It's in time and called once when the view outlet settled at runtime.
+
+# Segue
+
+## Outlet of view controller, which is the destination view controller, has not been set while preparing the segue. 
