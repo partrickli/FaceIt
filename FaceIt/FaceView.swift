@@ -22,7 +22,11 @@ class FaceView: UIView {
     }
     
     @IBInspectable
-    var eyesOpen: Bool = false
+    var eyesOpen: Bool = false {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
     @IBInspectable
 	var color: UIColor = UIColor.blue
     @IBInspectable
