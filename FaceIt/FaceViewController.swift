@@ -81,14 +81,14 @@ class FaceViewController: UIViewController {
     
     private func updateUI() {
         
-        switch expression.eyes {
-        case .open:
-            faceView?.eyesOpen = true
-        case .closed:
-            faceView?.eyesOpen = false
-        case .squinting:
-            faceView?.eyesOpen = false
-        }
+//        switch expression.eyes {
+//        case .open:
+//            faceView?.eyesOpen = true
+//        case .closed:
+//            faceView?.eyesOpen = false
+//        case .squinting:
+//            faceView?.eyesOpen = false
+//        }
         
         faceView?.mouthCurvature = mouthCuvatures[expression.mouth] ?? 0
         
