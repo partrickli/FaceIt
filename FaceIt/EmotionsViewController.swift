@@ -41,4 +41,13 @@ class EmotionsViewController: UITableViewController {
         cell.textLabel?.text = emotionalFaces[indexPath.row].name
         return cell
     }
+    
+    // modal view controller 
+    @IBAction func addEmotionFace(from segue: UIStoryboardSegue) {
+        if let editor = segue.source as? ExpressionEditorViewController {
+            emotionalFaces.append((name: editor.name, expression: editor.expression))
+            tableView.reloadData()
+        }
+    }
+    
 }

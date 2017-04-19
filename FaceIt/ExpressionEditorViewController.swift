@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExpressionEditorViewController: UITableViewController {
+class ExpressionEditorViewController: UITableViewController, UITextFieldDelegate {
     
     // keep track of UI
     var name: String {
@@ -32,7 +32,7 @@ class ExpressionEditorViewController: UITableViewController {
     @IBOutlet weak var eyeControl: UISegmentedControl!
     
     @IBAction func updateFace() {
-        print("\(name) = \(expression)")
+        faceViewController?.expression = expression
     }
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
@@ -44,6 +44,22 @@ class ExpressionEditorViewController: UITableViewController {
             return tableView.bounds.size.width
         } else {
             return super.tableView(tableView, heightForRowAt: indexPath)
+        }
+    }
+    
+    // text field delegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    //embed face view 
+    private var faceViewController: BlinkingFaceViewController?
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Embed Face" {
+            faceViewController = segue.destination as? BlinkingFaceViewController
+            faceViewController?.expression = expression
         }
     }
     

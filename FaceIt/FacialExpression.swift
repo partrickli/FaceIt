@@ -52,3 +52,9 @@ struct FacialExpression {
 	var eyeBrows: EyeBrows
 	var mouth: Mouth
 }
+
+extension FacialExpression: CustomStringConvertible {
+    var description: String {
+        return "mouth: \(mouth), eye: \(eyes)"
+    }
+}

@@ -141,7 +141,7 @@
         <scene sceneID="Dvw-j8-pcJ">
             <objects>
                 <tableViewController id="daQ-0y-Dnq" customClass="ExpressionEditorViewController" customModule="FaceIt" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="6Qg-uz-3jo">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="6Qg-uz-3jo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -160,6 +160,9 @@
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="daQ-0y-Dnq" id="exq-VI-MSd"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -175,16 +178,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="333"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1r4-56-bWb" customClass="FaceView" customModule="FaceIt" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="0.0" width="398" height="324.66666666666669"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </view>
+                                                <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h19-Sg-Gvl">
+                                                    <rect key="frame" x="8" y="0.0" width="398" height="325"/>
+                                                    <connections>
+                                                        <segue destination="ecB-H5-e4t" kind="embed" identifier="Embed Face" id="Jjx-ez-tnQ"/>
+                                                    </connections>
+                                                </containerView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="1r4-56-bWb" secondAttribute="bottom" id="ZYx-Cl-yKg" userLabel="bottomMargin = View.bottom"/>
-                                                <constraint firstItem="1r4-56-bWb" firstAttribute="trailing" secondItem="vOW-DL-eHZ" secondAttribute="trailingMargin" id="a0o-zO-9ZL"/>
-                                                <constraint firstItem="1r4-56-bWb" firstAttribute="leading" secondItem="vOW-DL-eHZ" secondAttribute="leadingMargin" id="iTd-uO-LUa"/>
-                                                <constraint firstItem="1r4-56-bWb" firstAttribute="top" secondItem="vOW-DL-eHZ" secondAttribute="top" id="myr-ON-esX"/>
+                                                <constraint firstItem="h19-Sg-Gvl" firstAttribute="leading" secondItem="vOW-DL-eHZ" secondAttribute="leadingMargin" id="XDO-ht-FUf"/>
+                                                <constraint firstItem="h19-Sg-Gvl" firstAttribute="trailing" secondItem="vOW-DL-eHZ" secondAttribute="trailingMargin" id="lIF-nI-M5Z"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="h19-Sg-Gvl" secondAttribute="bottom" id="vRY-uX-xMC"/>
+                                                <constraint firstItem="h19-Sg-Gvl" firstAttribute="top" secondItem="vOW-DL-eHZ" secondAttribute="top" id="wDK-ec-V0x"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -256,6 +261,11 @@
                                 <action selector="cancel:" destination="daQ-0y-Dnq" id="zgc-Db-Zpr"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="rEo-xI-NlY">
+                            <connections>
+                                <segue destination="DcK-lo-hJi" kind="unwind" identifier="Add Emotion Face" unwindAction="addEmotionFaceFrom:" id="hNf-5M-8aG"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="eyeControl" destination="nh1-f9-a5T" id="YcK-Fo-QFQ"/>
@@ -264,6 +274,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W8l-68-yZX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="DcK-lo-hJi" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1744.9275362318842" y="-320.38043478260875"/>
         </scene>
@@ -302,6 +313,49 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Omi-XX-yZ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="837.68115942028987" y="-320.38043478260875"/>
+        </scene>
+        <!--Blinking Face View Controller-->
+        <scene sceneID="bIt-kw-4TB">
+            <objects>
+                <viewController id="ecB-H5-e4t" customClass="BlinkingFaceViewController" customModule="FaceIt" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PMP-wF-CxV">
+                        <rect key="frame" x="0.0" y="0.0" width="398" height="325"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="qn6-AK-Dl3" customClass="FaceView" customModule="FaceIt" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="398" height="325"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="mouthCurvature">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="scale">
+                                        <real key="value" value="0.80000000000000004"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="eyeBrowTilt">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                        <color key="value" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="qn6-AK-Dl3" secondAttribute="bottom" id="Gd9-tK-5oK"/>
+                            <constraint firstAttribute="trailing" secondItem="qn6-AK-Dl3" secondAttribute="trailing" id="Im5-Id-G7i"/>
+                            <constraint firstItem="qn6-AK-Dl3" firstAttribute="top" secondItem="PMP-wF-CxV" secondAttribute="top" id="NHS-iT-Dct"/>
+                            <constraint firstItem="qn6-AK-Dl3" firstAttribute="leading" secondItem="PMP-wF-CxV" secondAttribute="leading" id="lgO-9R-OXJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="faceView" destination="qn6-AK-Dl3" id="H9H-D3-Pmu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ibp-Tf-Emx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2521.739130434783" y="-318.34239130434787"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
